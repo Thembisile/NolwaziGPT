@@ -1,10 +1,31 @@
-# Ognore llm models
-models/
-
-# Ignore environment variables
-.env
-
-# Ignore virtual environment 
+# Ignore virtual environment
 nzulu_env/
 
+# Ignore development and cache files
+*.pyc
+__pycache__/
+
+# Ignore git directory
+.git/
+
+# Ignore database files if using SQLite
+*.sqlite3
+
+# Ignore user-generated static and media files
+staticfiles/
+mediafiles/
+
+# Ignore other non-essential files
+*.log
+.DS_Store
+
+
+# Ignore source documents
 source_documents/
+
+# Ignore models
+models/
+
+# Ignore env variables
+.env
+
