@@ -15,7 +15,7 @@ This README will guide you through the process of setting up and testing the API
 1. **Clone the Repository**: 
 
    ```bash
-   git clone https://github.com/Thembisile/nzulu_webapp.git
+   git clone https://github.com/Thembisile/nzulu_api.git
    cd nzulu_webapp
    ```
 
@@ -46,7 +46,7 @@ The API should now be running at `http://127.0.0.1:8000/`.
 
 ## Testing the API
 
-You can test the API using tools like `curl`, Postman, or any HTTP client library in a programming language of your choice.
+You can test the API using tools like `curl`, Django Rest Frame, or any HTTP client library in a programming language of your choice.
 
 Here's an example of how to call an endpoint using `curl`:
 
@@ -61,7 +61,7 @@ Replace `"your_query"` and `"your_collection"` with the appropriate values for y
 
 ## Documentation
 
-To be included once API in production [API Documentation](link-to-documentation).
+To be included once API in production [API Documentation](#).
 
 
 ## Contact

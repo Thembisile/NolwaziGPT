@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  nzulu_webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SETTINGS_MODULE=nzulu_webapp.settings
+      - PORT=5000
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/nzulu_chatapp

@@ -1,0 +1,10 @@
+# Ognore llm models
+models/
+
+# Ignore environment variables
+.env
+
+# Ignore virtual environment 
+nzulu_env/
+
+source_documents/
