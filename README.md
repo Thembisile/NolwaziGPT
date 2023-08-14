@@ -60,7 +60,6 @@ curl -X POST http://127.0.0.1:8000/api/chat -H "Content-Type: application/json" 
 Replace `"your_query"` and `"your_collection"` with the appropriate values for your API call.
 
 ## Documentation
----
 ## **Nzulu API Documentation**
 
 ### **1. Upload Documents Endpoint**
