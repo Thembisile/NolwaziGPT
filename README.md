@@ -43,6 +43,7 @@ This README will guide you through the process of setting up and testing the API
    ```
 
 The API should now be running at `http://127.0.0.1:8000/`.
+
 To access the Upload API, use the following endpoint : 
  `http://127.0.0.1:8000/api/upload`
 
