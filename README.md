@@ -43,7 +43,18 @@ This README will guide you through the process of setting up and testing the API
    ```
 
 The API should now be running at `http://127.0.0.1:8000/`.
+To access the Upload API, use the following endpoint : 
+ `http://127.0.0.1:8000/api/upload`
 
+- You will be prompted to insert a file(type:pdf,word,txt and csv📁) and add that file into a collection(category).
+- Enter the collection name
+
+To access the Chat API, use the following endpoint : 
+ `http://127.0.0.1:8000/api/chat`
+- You will be prompted to enter your query(type:string=>"Enter your prompt"), which should be any question you'd like to ask based any documents uploaded as long as the correct collection has been selected.
+- Insert the collection name from which you would like to query.
+
+  
 ## Testing the API
 
 You can test the API using tools like `curl`, Django Rest Frame, or any HTTP client library in a programming language of your choice.
