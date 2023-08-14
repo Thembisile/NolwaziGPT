@@ -44,6 +44,8 @@ This README will guide you through the process of setting up and testing the API
 
 The API should now be running at `http://127.0.0.1:8000/`.
 
+## Testing the API endpoints using Django REST Framework
+
 To access the Upload API, use the following endpoint : 
  `http://127.0.0.1:8000/api/upload`
 
@@ -56,7 +58,7 @@ To access the Chat API, use the following endpoint :
 - Insert the collection name from which you would like to query.
 
   
-## Testing the API
+## Testing the API using cURL
 
 You can test the API using tools like `curl`, Django Rest Frame, or any HTTP client library in a programming language of your choice.
 
