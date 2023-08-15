@@ -32,11 +32,20 @@ This README will guide you through the process of setting up and testing the API
    pip install -r requirements.txt
    ```
 
-4. **Configure Environment Variables** (if applicable):
+4. **Downloading a Model**:
+
+   You may use the below link to download the model: 
+
+> [llama-2-13b-chat.ggmlv3.q4_1.bin](https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_1.bin)
+
+>- Create a folder called `models` and save the model in that folder
+>- Update the `.env` file to the relative path of your model and ensure the correct model is linked on your `.env`.
+
+5. **Configure Environment Variables** (if applicable):
 
    Modify `.env` file with your specific configuration, or export variables manually.
 
-5. **Run the Server**:
+6. **Run the Server**:
 
    ```bash
    python manage.py runserver
