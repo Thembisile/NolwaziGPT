@@ -44,7 +44,21 @@ This README will guide you through the process of setting up and testing the API
 
 The API should now be running at `http://127.0.0.1:8000/`.
 
-## Testing the API
+## Testing the API endpoints using Django REST Framework
+
+To access the Upload API, use the following endpoint : 
+ `http://127.0.0.1:8000/api/upload`
+
+- You will be prompted to insert a file(type:pdf,word,txt and csv📁) and add that file into a collection(category).
+- Enter the collection name
+
+To access the Chat API, use the following endpoint : 
+ `http://127.0.0.1:8000/api/chat`
+- You will be prompted to enter your query(type:string=>"Enter your prompt"), which should be any question you'd like to ask based any documents uploaded as long as the correct collection has been selected.
+- Insert the collection name from which you would like to query.
+
+  
+## Testing the API using cURL
 
 You can test the API using tools like `curl`, Django Rest Frame, or any HTTP client library in a programming language of your choice.
 
@@ -60,9 +74,55 @@ curl -X POST http://127.0.0.1:8000/api/chat -H "Content-Type: application/json" 
 Replace `"your_query"` and `"your_collection"` with the appropriate values for your API call.
 
 ## Documentation
+## **Nzulu API Documentation**
 
-To be included once API in production [API Documentation](#).
+### **1. Upload Documents Endpoint**
 
+**Endpoint**: `/api/upload`
+
+**Method**: POST
+
+**Description**: This endpoint allows users to upload documents that will be embedded and stored for retrieval.
+
+**Headers**:
+- Content-Type: `multipart/form-data`
+
+**Body**:
+- `file`: The document you wish to upload (type: file).
+- `collection_name`: The name of the collection to which this document should belong (type: string).
+
+**Sample cURL**:
+```bash
+curl --location --request POST 'http://localhost:8000/api/upload' \
+--header 'Content-Type: multipart/form-data' \
+--form 'file=@path_to_your_file.txt' \
+--form 'collection_name=sample_collection'
+```
+
+### **2. Chat Endpoint**
+
+**Endpoint**: `/api/chat`
+
+**Method**: POST
+
+**Description**: Send a query to retrieve answers based on the uploaded documents.
+
+**Headers**:
+- Content-Type: `application/json`
+
+**Body**:
+- `query`: The question or statement you wish to get an answer for (type: string).
+- `collection_name`: The name of the collection you're querying against (type: string).
+
+**Sample cURL**:
+```bash
+curl --location --request POST 'http://localhost:8000/api/chat' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "query": "What does TSI stand for?",
+    "collection_name": "sample_collection"
+}'
+```
 
 ## Contact
 
