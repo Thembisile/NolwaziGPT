@@ -14,29 +14,23 @@ from pathlib import Path
 import os
 import django_heroku
 from decouple import Config
-from decouple import config
+from dotenv import load_dotenv, find_dotenv
 
-# Define the base directory
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+load_dotenv(find_dotenv())
 
-# Define the path to the .env file
-env_file = os.path.join(BASE_DIR, '.env')
-
-# Initialize the Config object with the path to your .env file
-config = Config(env_file)
-
-
-EMBEDDINGS_MODEL_NAME = os.environ.get("EMBEDDINGS_MODEL_NAME")
+EMBEDDINGS_MODEL_NAME = os.environ["EMBEDDINGS_MODEL_NAME"]
+print(EMBEDDINGS_MODEL_NAME)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c0_k59wsv5$@y-srbe8%dl%utjdr=l28nq1geu2kijx!b+cql2'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -49,6 +43,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.herokuapp.com']
 INSTALLED_APPS = [
     'rest_framework',
     'api',
+    # 'corsheaders',
+    # 'channels',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,8 +55,13 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    
+    # 'channels.middleware.BaseMiddleware',
+
+
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -68,6 +69,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CORS_ALLOW_ALL_ORIGINS = False
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # React's default dev server
+#     # Add any other origins you want to allow here
+# ]
 
 ROOT_URLCONF = 'nzulu_webapp.urls'
 
@@ -88,19 +95,27 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'nzulu_webapp.wsgi.application'
+# ASGI_APPLICATION = 'nzulu_webapp.routing.application'
 
-
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],  # This assumes you're running Redis locally
+#         },
+#     },
+# }
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME', default='nzulu_db'),
-        'USER': config('USERNAME', default='postgres'),
-        'PASSWORD': config('PASSWORD', default='thembisile'),
-        'HOST': config('HOST', default='localhost'),
-        'PORT': config('PORT', default='5432'),
+        'NAME': os.environ['DATABASE_NAME'] ,
+        'USER': os.environ['USERNAME'],
+        'PASSWORD': os.environ['PASSWORD'],
+        'HOST': os.environ['HOST'],
+        'PORT': os.environ['PORT'],
     }
 }
 

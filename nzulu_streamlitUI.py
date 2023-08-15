@@ -6,6 +6,11 @@ import requests
 
 API_URL = 'http://127.0.0.1:8000'
 
+def get_collections():
+    url = f"{API_URL}/api/collections/"
+    response = requests.get(url)
+    return response.json().get('collections', [])
+
 def process_query(query, collection):
     url = f"{API_URL}/api/chat"
     response = requests.post(url, json={"query": query, "collection_name": collection})
@@ -14,12 +19,13 @@ def process_query(query, collection):
 def main():
     st.markdown("<h1 style='text-align: center; color: black;'>💬 NzuluwaziGPT</h1>", unsafe_allow_html=True)
 
-    # Document embedding
-    st.header("Upload Documents")
-    uploaded_file = st.file_uploader("Choose a file to embed", type=["txt", "pdf"], accept_multiple_files=False)
-    collection_name = st.text_input("Collection Name:")
-    if st.button("Upload") and uploaded_file:
-        embed_documents(uploaded_file, collection_name)
+    # Sidebar for Document Uploading
+    with st.sidebar:
+        st.header("Upload Documents")
+        uploaded_file = st.file_uploader("Choose a file to embed", type=["txt", "pdf"], accept_multiple_files=False)
+        collection_name = st.text_input("Collection Name:")
+        if st.button("Upload") and uploaded_file:
+            embed_documents(uploaded_file, collection_name)
 
     colored_header(label='', description='', color_name='blue-30')
 
@@ -52,9 +58,9 @@ def main():
         user_input = get_text()
         submit_button = st.button('Submit')
 
-        # If the user has input a query, ask for the collection name
-        # user_input = st.text_input("You:", key="user_input")
-        query_collection_name = st.text_input("Category", key="query_collection_name")
+        # Dropdown to select the collection
+        query_collection_name = st.selectbox('Select Collection:', get_collections(), key="query_collection_name")
+
         if user_input and submit_button:
             if not query_collection_name:  # Check if the query_collection_name is empty
                 st.error("Error: Category cannot be empty!",  icon="🚨")

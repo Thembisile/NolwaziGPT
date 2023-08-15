@@ -5,6 +5,9 @@ nzulu_env/
 *.pyc
 __pycache__/
 
+# Ignore vectorstore
+db/
+
 # Ignore git directory
 .git/
 

@@ -8,7 +8,8 @@ import urllib
 from tqdm import tqdm
 import ingest
 import time
-from django.http import JsonResponse 
+# from django.http import JsonResponse
+# import chromadb
 
 from .serializers import UploadSerializer, ChatSerializer
 
@@ -17,9 +18,16 @@ from rest_framework.response import Response
 from rest_framework import status
 import requests
 from db_config import client
-from .models import Documents
+
+# Get all collections in the vectordatabase
+def get_collections():
+    collection_names_list = [ "General", "FAQ", "GeneralProcedures", "DTC", "Policies", "Guidelines"]
+    collections = [client.get_collection(name) for name in collection_names_list]
+    collection_names = [collection.name for collection in collections]
+    return collection_names
 
 
+# Download model if not available on user machine
 def model_download():
     model_type = os.environ.get('MODEL_TYPE')
     url = None
@@ -54,7 +62,7 @@ def model_download():
                 model_path = filename
                 os.environ['MODEL_PATH'] = filename
 
-
+# Save files locally then apply ingest script to create embeddings for the uploaded documents
 def embed_documents(files, collection_name):
     print("Embedding documents...")
     # Save the files in the source_documents directory
@@ -73,6 +81,7 @@ def embed_documents(files, collection_name):
         print(f"Error loading documents: {str(e)}")
     return saved_files
 
+# Process the query and return a response from the model as a text
 def process_query(query, collection_name):
     print(f"Model path: {os.environ.get('MODEL_PATH')}")
 
@@ -83,6 +92,7 @@ def process_query(query, collection_name):
     # Use the ChromaDB client to create a Chroma instance
     db = Chroma(client=client, embedding_function=embeddings,
                 collection_name=collection_name)
+    print(client.get_collection(name=collection_name))
     retriever = db.as_retriever()
 
     # Prepare the LLM
@@ -120,7 +130,7 @@ def process_query(query, collection_name):
     print(f"Response generation completed in: {round(total_time, 2)} seconds.")
     return answer
 
-
+# Upload API - uses the embed function
 class UploadView(APIView):
     serializer_class = UploadSerializer
 
@@ -140,11 +150,12 @@ class UploadView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Chat API - uses the process_query module
 class ChatView(APIView):
     serializer_class = ChatSerializer
 
     def post(self, request):
-        print("Nzulu's response request received..")
+        print("Request to Nzulu received..")
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -153,9 +164,14 @@ class ChatView(APIView):
 
             print("Nzulu is processing the query...")
             answers = process_query(query, collection_name)
-            print("Nzulu has processed the query.")
+            print("Nzulu has finished processing the query!")
 
             return Response({"answers": answers})
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ListCollectionsView(APIView):
+    def get(self, request):
+        collections = get_collections()
+        return Response({"collections": collections})

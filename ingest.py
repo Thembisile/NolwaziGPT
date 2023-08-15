@@ -100,6 +100,7 @@ def main(collection):
         db = Chroma.from_documents(texts, embeddings, collection_name=collection, persist_directory=persist_directory, client_settings=CHROMA_SETTINGS)
 
     db.persist()
+    # db = None
 
     # # Visualize Embeddings in 3D
     # from chromaviz import visualize_collection
