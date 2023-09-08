@@ -1,4 +1,4 @@
-langchain==0.0.237
+langchain==0.0.279
 pygpt4all==1.1.0
 chromadb==0.4.2 
 llama-cpp-python==0.1.48
@@ -16,12 +16,12 @@ streamlit
 django
 djangorestframework
 dj-database-url 
+django_heroku
 whitenoise 
 gunicorn 
 psycopg2-binary
-django-heroku
 sentence-transformers
 python-decouple
 streamlit_chat
 streamlit_extras
-libpq-dev
+channels
