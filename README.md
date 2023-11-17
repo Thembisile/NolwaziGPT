@@ -1,4 +1,4 @@
-# NzululwaziGPT API
+# NolwaziGPT Chatbot RAG
 
 NzululwaziGPT is an API that provides human-like text responses to any question you might have on organizational documents.
 
