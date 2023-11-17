@@ -128,7 +128,7 @@ curl --location --request POST 'http://localhost:8000/api/upload' \
 curl --location --request POST 'http://localhost:8000/api/chat' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "query": "What does TSI stand for?",
+    "query": "Ask your question here",
     "collection_name": "sample_collection"
 }'
 ```
